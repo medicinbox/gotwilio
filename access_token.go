@@ -23,10 +23,10 @@ type AccessToken struct {
 	Identity  string
 }
 
-// Grant is a perimssion given to the Access Token.
+// Grant is a permission given to the Access Token.
 // Types include Chat, Video etc.
 type Grant interface {
-	grantName() string
+	GrantName() string
 }
 
 // VideoGrant is the permission to use the Video API
@@ -35,7 +35,7 @@ type VideoGrant struct {
 	Room string `json:"room,omitempty"`
 }
 
-func (g *VideoGrant) grantName() string {
+func (g *VideoGrant) GrantName() string {
 	return "video"
 }
 
@@ -103,7 +103,7 @@ func (g *grantsClaim) MarshalJSON() ([]byte, error) {
 	data := make(map[string]interface{})
 	data["identity"] = g.Identity
 	for _, grant := range g.Grants {
-		data[grant.grantName()] = grant
+		data[grant.GrantName()] = grant
 	}
 	return json.Marshal(data)
 }
